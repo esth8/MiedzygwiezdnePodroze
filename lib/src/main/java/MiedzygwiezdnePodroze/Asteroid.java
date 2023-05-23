@@ -24,7 +24,7 @@ public class Asteroid {
 	
 	public void asteroidsInSpace (int n, int ast, List<Asteroid> asteroidList, Square[][] map) { 	// n = rozmiar mapy, ast = liczba asteroid
 		for (int i=0; i<ast; i++) {
-			// losowanie współrzędnych dla planety dopóki nie zostanie wylosowane niezajęte pole
+			// losowanie współrzędnych dla asteroidy dopóki nie zostanie wylosowane niezajęte pole
 			int ox, oy;
 			do {
 				ox = RandomNumber.generateRandom(n);

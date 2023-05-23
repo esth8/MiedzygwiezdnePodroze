@@ -1,11 +1,11 @@
 package MiedzygwiezdnePodroze;
 
 public class Spaceship implements ISpaceship{
-	private int x;
-	private int y;
-	private boolean inSpace;
-	private int durability;
-	private int enduredBattles;
+	public int x;
+	public int y;
+	public boolean inSpace;
+	public int durability;
+	public int enduredBattles;
 	
 	@Override
 	public void move() {

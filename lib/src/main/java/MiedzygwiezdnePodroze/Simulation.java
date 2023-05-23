@@ -13,6 +13,8 @@ public class Simulation {
 		pl=5;
 		bh=5;
 		ast=5;
+		tr=5;
+		al=5;
 		
 		int size=10;
 		Space space = new Space();
@@ -30,7 +32,13 @@ public class Simulation {
 		List<Asteroid> asteroidList = asteroid.createAsteroidList(ast);
 		asteroid.asteroidsInSpace(size, ast, asteroidList, map);
 		
+		TravelersSpaceship traveler = new TravelersSpaceship();
+		List<TravelersSpaceship> travelerList = traveler.createTravelersList(tr);
+		traveler.travelersInSpace(size, tr, travelerList, map);
 		
+		AliensSpaceship alien = new AliensSpaceship();
+		List<AliensSpaceship> alienList = alien.createAliensList(al);
+		alien.aliensInSpace(size, al, alienList, map);
 		
 		space.printSpace(map, size);
 	}

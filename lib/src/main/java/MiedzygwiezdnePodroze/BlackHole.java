@@ -28,7 +28,7 @@ public class BlackHole {
 	
 	public void holesInSpace (int n, int bh, List<BlackHole> blackHoleList, Square[][] map) { 	// n = rozmiar mapy, bh = liczba czarnych dziur
 		for (int i=0; i<bh; i++) {
-			// losowanie współrzędnych dla planety dopóki nie zostanie wylosowane niezajęte pole
+			// losowanie współrzędnych dla czarnej dziury dopóki nie zostanie wylosowane niezajęte pole
 			int ox, oy;
 			do {
 				ox = RandomNumber.generateRandom(n);
