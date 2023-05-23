@@ -10,7 +10,7 @@ public class AliensSpaceship extends Spaceship{
 	
 	public AliensSpaceship (){
 		inSpace = true;
-		durability=RandomNumber.generateRandom(11);
+		durability=RandomNumber.generateRandom(10)+1;
 		enduredBattles=0;
 		collidedAstrd=0;
 	}
@@ -23,7 +23,7 @@ public class AliensSpaceship extends Spaceship{
 		return alienList;
 	}
 	
-	public void aliensInSpace (int n, int al, List<AliensSpaceship> alienList, Square[][] map) { 	// n = rozmiar mapy, tr = liczba statków obcych
+	public void aliensInSpace (int n, int al, List<AliensSpaceship> alienList, Square[][] map) { 	// n = rozmiar mapy, al = liczba statków obcych
 		for (int i=0; i<al; i++) {
 			// losowanie współrzędnych dla statku obcych dopóki nie zostanie wylosowane niezajęte pole
 			int ox, oy;

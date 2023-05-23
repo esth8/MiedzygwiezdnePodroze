@@ -5,7 +5,7 @@ import java.util.List;
 
 import MiedzygwiezdnePodroze.Space.Square;
 
-public class Asteroid {
+public class Asteroid implements IAsteroid {
 	private int x;
 	private int y;
 	private String direction;
@@ -36,5 +36,35 @@ public class Asteroid {
 			map[ox][oy].type='A';
 			map[ox][oy].index=i;
 		}
+	}
+
+	@Override
+	public void move(Asteroid asteroid, Square[][] map) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void collisionPlanet(Asteroid asteroid, Planet planet, Square[][] map) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void collisionTraveler(Asteroid asteroid, TravelersSpaceship traveler, Square[][] map) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void collisionAlien(Asteroid asteroid, AliensSpaceship alien, Square[][] map) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void beDestroyed(Asteroid asteroid, BlackHole blackHole, Square[][] map) {
+		// TODO Auto-generated method stub
+		
 	}
 }

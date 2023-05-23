@@ -8,7 +8,7 @@ import MiedzygwiezdnePodroze.Space.Square;
 public class TravelersSpaceship extends Spaceship{
 	public TravelersSpaceship (){
 		inSpace = true;
-		durability=RandomNumber.generateRandom(11);
+		durability=RandomNumber.generateRandom(10)+1;
 		enduredBattles=0;
 	}
 	
