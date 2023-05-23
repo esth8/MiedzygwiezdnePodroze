@@ -33,6 +33,12 @@ tasks.named('test') {
     useJUnitPlatform()
 }
 
+run {
+	doFirst{
+		print "Rozpoczecie symulacji.\n"
+	}
+}
+
 
 application {
 	mainClass = 'MiedzygwiezdnePodroze.Simulation'
