@@ -13,6 +13,7 @@ public class AliensSpaceship extends Spaceship{
 		durability=RandomNumber.generateRandom(10)+1;
 		enduredBattles=0;
 		collidedAstrd=0;
+		type='L';
 	}
 	
 	public List<AliensSpaceship> createAliensList (int n){ 	// n = liczba statków obcych
