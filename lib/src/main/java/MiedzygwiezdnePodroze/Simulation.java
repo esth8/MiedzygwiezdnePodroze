@@ -62,6 +62,10 @@ public class Simulation {
 				alienList.get(i).move(alienList.get(i), i, map, spaceSize);
 				System.out.println("alien " + i);
 			}
+			for (int i=0; i<asteroidList.size(); i++) {
+				asteroidList.get(i).move(asteroidList.get(i), i, map, spaceSize);
+				System.out.println("asteroid " + i);
+			}
 			
 			iteration++;
 		}
