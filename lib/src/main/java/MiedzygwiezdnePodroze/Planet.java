@@ -9,9 +9,9 @@ import java.util.ArrayList;
 public class Planet {
 	private int x;
 	private int y;
-	private int landedTravShips;
-	private int landedAlienShips;
-	private int collidedAstrd;
+	public int landedTravShips;
+	public int landedAlienShips;
+	public int collidedAstrd;
 	
 	public Planet (){
 		landedTravShips=0;

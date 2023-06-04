@@ -8,9 +8,9 @@ import MiedzygwiezdnePodroze.Space.Square;
 public class BlackHole {
 	private int x;
 	private int y;
-	private int destroyedTravShips;
-	private int destroyedAlienShips;
-	private int destroyedAstrd;
+	public int destroyedTravShips;
+	public int destroyedAlienShips;
+	public int destroyedAstrd;
 	
 	public BlackHole (){
 		destroyedTravShips=0;

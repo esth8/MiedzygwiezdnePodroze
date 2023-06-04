@@ -63,8 +63,9 @@ public class Asteroid implements IAsteroid {
 		}
 		return "\0";
 	}
-
-	public void move(Asteroid asteroid, int i, Square[][] map, int spaceSize) {
+	
+	@Override
+	public void move(Asteroid asteroid, int i, List<Planet> planetList, List<TravelersSpaceship> travelerList, List<AliensSpaceship> alienList, List<BlackHole> blackHoleList, Square[][] map, int spaceSize) {
 		switch (asteroid.direction) {
 		case "NW": {
 			if (asteroid.x!=0 && asteroid.y!=0) {
@@ -73,6 +74,8 @@ public class Asteroid implements IAsteroid {
 					map[asteroid.x][asteroid.y].index=-1;
 					map[asteroid.x-1][asteroid.y-1].type='A';
 					map[asteroid.x-1][asteroid.y-1].index=i;
+				} else {
+					asteroid.interaction(asteroid, map[asteroid.x-1][asteroid.y-1], planetList, travelerList, alienList, blackHoleList, map);
 				}
 			} else {
 				map[asteroid.x][asteroid.y].type='\0';
@@ -88,6 +91,8 @@ public class Asteroid implements IAsteroid {
 					map[asteroid.x][asteroid.y].index=-1;
 					map[asteroid.x][asteroid.y-1].type='A';
 					map[asteroid.x][asteroid.y-1].index=i;
+				} else {
+					asteroid.interaction(asteroid, map[asteroid.x][asteroid.y-1], planetList, travelerList, alienList, blackHoleList, map);
 				}
 			} else {
 				map[asteroid.x][asteroid.y].type='\0';
@@ -98,11 +103,13 @@ public class Asteroid implements IAsteroid {
 		}
 		case "NE": {
 			if (asteroid.x<spaceSize-1 && asteroid.y!=0) {
-				if (map[asteroid.x-1][asteroid.y-1].type=='\0') {
+				if (map[asteroid.x+1][asteroid.y-1].type=='\0') {
 					map[asteroid.x][asteroid.y].type='\0';
 					map[asteroid.x][asteroid.y].index=-1;
 					map[asteroid.x+1][asteroid.y-1].type='A';
 					map[asteroid.x+1][asteroid.y-1].index=i;
+				} else {
+					asteroid.interaction(asteroid, map[asteroid.x+1][asteroid.y-1], planetList, travelerList, alienList, blackHoleList, map);
 				}
 			} else {
 				map[asteroid.x][asteroid.y].type='\0';
@@ -118,6 +125,8 @@ public class Asteroid implements IAsteroid {
 					map[asteroid.x][asteroid.y].index=-1;
 					map[asteroid.x-1][asteroid.y].type='A';
 					map[asteroid.x-1][asteroid.y].index=i;
+				} else {
+					asteroid.interaction(asteroid, map[asteroid.x-1][asteroid.y], planetList, travelerList, alienList, blackHoleList, map);
 				}
 			} else {
 				map[asteroid.x][asteroid.y].type='\0';
@@ -133,6 +142,8 @@ public class Asteroid implements IAsteroid {
 					map[asteroid.x][asteroid.y].index=-1;
 					map[asteroid.x+1][asteroid.y].type='A';
 					map[asteroid.x+1][asteroid.y].index=i;
+				} else {
+					asteroid.interaction(asteroid, map[asteroid.x+1][asteroid.y], planetList, travelerList, alienList, blackHoleList, map);
 				}
 			} else {
 				map[asteroid.x][asteroid.y].type='\0';
@@ -148,6 +159,8 @@ public class Asteroid implements IAsteroid {
 					map[asteroid.x][asteroid.y].index=-1;
 					map[asteroid.x-1][asteroid.y+1].type='A';
 					map[asteroid.x-1][asteroid.y+1].index=i;
+				} else {
+					asteroid.interaction(asteroid, map[asteroid.x-1][asteroid.y+1], planetList, travelerList, alienList, blackHoleList, map);
 				}
 			} else {
 				map[asteroid.x][asteroid.y].type='\0';
@@ -163,6 +176,8 @@ public class Asteroid implements IAsteroid {
 					map[asteroid.x][asteroid.y].index=-1;
 					map[asteroid.x][asteroid.y+1].type='A';
 					map[asteroid.x][asteroid.y+1].index=i;
+				} else {
+					asteroid.interaction(asteroid, map[asteroid.x][asteroid.y+1], planetList, travelerList, alienList, blackHoleList, map);
 				}
 			} else {
 				map[asteroid.x][asteroid.y].type='\0';
@@ -178,6 +193,8 @@ public class Asteroid implements IAsteroid {
 					map[asteroid.x][asteroid.y].index=-1;
 					map[asteroid.x+1][asteroid.y+1].type='A';
 					map[asteroid.x+1][asteroid.y+1].index=i;
+				} else {
+					asteroid.interaction(asteroid, map[asteroid.x+1][asteroid.y+1], planetList, travelerList, alienList, blackHoleList, map);
 				}
 			} else {
 				map[asteroid.x][asteroid.y].type='\0';
@@ -188,28 +205,64 @@ public class Asteroid implements IAsteroid {
 		}
 		}
 	}
+	
+	public void interaction(Asteroid asteroid, Square square, List<Planet> planetList, List<TravelersSpaceship> travelerList, List<AliensSpaceship> alienList, List<BlackHole> blackHoleList, Square[][] map) {
+		switch (square.type) {
+		case ('P'):
+			asteroid.collisionPlanet(asteroid, planetList.get(square.index), map);
+			break;
+		case ('T'):
+			asteroid.collisionTraveler(asteroid, travelerList.get(square.index), map);
+			break;
+		case ('L'):
+			asteroid.collisionAlien(asteroid, alienList.get(square.index), map);
+			break;
+		case ('H'):
+			asteroid.beDestroyed(asteroid, blackHoleList.get(square.index), map);
+			break;
+		//case ('A'):
+		}
+	}
 
 	@Override
 	public void collisionPlanet(Asteroid asteroid, Planet planet, Square[][] map) {
-		// TODO Auto-generated method stub
-		
+		planet.collidedAstrd++;
+		asteroid.inSpace=false;
+		map[asteroid.x][asteroid.y].type='\0';
+		map[asteroid.x][asteroid.y].index=-1;
 	}
 
 	@Override
 	public void collisionTraveler(Asteroid asteroid, TravelersSpaceship traveler, Square[][] map) {
-		// TODO Auto-generated method stub
-		
+		traveler.inSpace=false;
+		traveler.durability=0;
+		asteroid.inSpace=false;
+		map[traveler.x][traveler.y].type='\0';
+		map[traveler.x][traveler.y].index=-1;
+		map[asteroid.x][asteroid.y].type='\0';
+		map[asteroid.x][asteroid.y].index=-1;
 	}
 
 	@Override
 	public void collisionAlien(Asteroid asteroid, AliensSpaceship alien, Square[][] map) {
-		// TODO Auto-generated method stub
-		
+		alien.durability-=2;
+		if (alien.durability<=0) {
+			alien.inSpace=false;
+			map[alien.x][alien.y].type='\0';
+			map[alien.x][alien.y].index=-1;
+		} else {
+			alien.collidedAstrd++;
+		}
+		asteroid.inSpace=false;
+		map[asteroid.x][asteroid.y].type='\0';
+		map[asteroid.x][asteroid.y].index=-1;
 	}
 
 	@Override
 	public void beDestroyed(Asteroid asteroid, BlackHole blackHole, Square[][] map) {
-		// TODO Auto-generated method stub
-		
+		asteroid.inSpace=false;
+		map[asteroid.x][asteroid.y].type='\0';
+		map[asteroid.x][asteroid.y].index=-1;
+		blackHole.destroyedAstrd++;
 	}
 }

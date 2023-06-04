@@ -55,15 +55,15 @@ public class Simulation {
 		
 		while (iteration<iter && shipsInSpace>0) {
 			for (int i=0; i<travelerList.size(); i++) {
-				travelerList.get(i).move(travelerList.get(i), i, map, spaceSize);
+				travelerList.get(i).move(travelerList.get(i), i, planetList, travelerList, alienList, asteroidList, blackHoleList, map, spaceSize);
 				System.out.println("traveler " + i);
 			}
 			for (int i=0; i<alienList.size(); i++) {
-				alienList.get(i).move(alienList.get(i), i, map, spaceSize);
+				alienList.get(i).move(alienList.get(i), i, planetList, travelerList, alienList, asteroidList, blackHoleList, map, spaceSize);
 				System.out.println("alien " + i);
 			}
 			for (int i=0; i<asteroidList.size(); i++) {
-				asteroidList.get(i).move(asteroidList.get(i), i, map, spaceSize);
+				asteroidList.get(i).move(asteroidList.get(i), i, planetList, travelerList, alienList, blackHoleList, map, spaceSize);
 				System.out.println("asteroid " + i);
 			}
 			

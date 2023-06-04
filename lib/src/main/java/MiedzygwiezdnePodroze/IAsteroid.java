@@ -6,7 +6,8 @@ import MiedzygwiezdnePodroze.Space.Square;
 
 public interface IAsteroid {
 	public String randomDirection ();
-	void move(Asteroid asteroid, int i, Square[][] map, int spaceSize);
+	void move(Asteroid asteroid, int i, List<Planet> planetList, List<TravelersSpaceship> travelerList, List<AliensSpaceship> alienList, List<BlackHole> blackHoleList, Square[][] map, int spaceSize);
+	void interaction(Asteroid asteroid, Square square, List<Planet> planetList, List<TravelersSpaceship> travelerList, List<AliensSpaceship> alienList, List<BlackHole> blackHoleList, Square[][] map);
 	void collisionPlanet(Asteroid asteroid, Planet planet, Square[][] map);
 	void collisionTraveler(Asteroid asteroid, TravelersSpaceship traveler, Square[][] map);
 	void collisionAlien(Asteroid asteroid, AliensSpaceship alien, Square[][] map);

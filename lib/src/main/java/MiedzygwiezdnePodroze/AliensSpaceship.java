@@ -6,7 +6,7 @@ import java.util.List;
 import MiedzygwiezdnePodroze.Space.Square;
 
 public class AliensSpaceship extends Spaceship{
-	private int collidedAstrd;
+	public int collidedAstrd;
 	
 	public AliensSpaceship (){
 		inSpace = true;
