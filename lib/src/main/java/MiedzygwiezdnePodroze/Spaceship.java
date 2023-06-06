@@ -14,6 +14,20 @@ public class Spaceship implements ISpaceship{
 	
 	@Override
 	public void move(Spaceship spaceship, int i, List<Planet> planetList, List<TravelersSpaceship> travelerList, List<AliensSpaceship> alienList, List<Asteroid> asteroidList, List<BlackHole> blackHoleList, Square[][] map, int spaceSize) {
+		for (int yy=-1; yy<=1; yy++) {
+			for (int xx=-1; xx<=1; xx++) {
+				if (xx==0 && yy==0) {
+				} else {
+					if (spaceship.x+xx!=-1 && spaceship.y+yy!=-1 && spaceship.x+xx!=spaceSize && spaceship.y+yy!=spaceSize) {
+						if (map[spaceship.x+xx][y+yy].type=='P') {
+							spaceship.land(spaceship, planetList.get(map[spaceship.x+xx][y+yy].index), map);
+							return;
+						}
+					}
+				}
+			}
+		}
+		
 		int direction=RandomNumber.generateRandom(4); 	// 0 - ruch w gore planszy, 1 - w lewo, 2 - w prawo, 3 - w dol
 		System.out.println("direction: " + direction);
 		switch (direction) {
@@ -99,9 +113,9 @@ public class Spaceship implements ISpaceship{
 	@Override
 	public void interaction(Spaceship spaceship, int i, Square square, List<Planet> planetList, List<TravelersSpaceship> travelerList, List<AliensSpaceship> alienList, List<Asteroid> asteroidList, List<BlackHole> blackHoleList, Square[][] map) {
 		switch (square.type) {
-		case ('P'):
+		/*case ('P'):
 			spaceship.land(spaceship, planetList.get(square.index), map);
-			break;
+			break;*/
 		case ('T'):
 			if (spaceship.type=='L') {
 				spaceship.fight(travelerList.get(square.index), alienList.get(i), 'L', map);

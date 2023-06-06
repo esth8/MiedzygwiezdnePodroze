@@ -44,10 +44,12 @@ public class Simulation {
 		
 		space.printSpace(map, spaceSize);
 		
-		runSimulation(map, planetList, blackHoleList, asteroidList, travelerList, alienList, 1, spaceSize);
+		runSimulation(map, planetList, blackHoleList, asteroidList, travelerList, alienList, 2, spaceSize);
 	}
 	
 	public static void runSimulation(Square[][] map, List<Planet> planetList, List<BlackHole> blackHoleList, List<Asteroid> asteroidList, List<TravelersSpaceship> travelerList, List<AliensSpaceship> alienList, int iter, int spaceSize) {
+		Space space = new Space();
+		
 		int iteration=0;
 		int shipsInSpace=travelerList.size()+alienList.size();
 		
@@ -58,6 +60,7 @@ public class Simulation {
 					System.out.println("traveler " + i + " dur: " + travelerList.get(i).durability + " x: " + travelerList.get(i).x + " y: " + travelerList.get(i).y);
 					travelerList.get(i).move(travelerList.get(i), i, planetList, travelerList, alienList, asteroidList, blackHoleList, map, spaceSize);
 					System.out.println("traveler " + i + " dur: " + travelerList.get(i).durability);
+					space.printSpace(map, spaceSize);
 				}
 			}
 			for (int i=0; i<alienList.size(); i++) {
@@ -65,6 +68,7 @@ public class Simulation {
 					System.out.println("alien " + i + " dur: " + alienList.get(i).durability + " x: " + alienList.get(i).x + " y: " + alienList.get(i).y);
 					alienList.get(i).move(alienList.get(i), i, planetList, travelerList, alienList, asteroidList, blackHoleList, map, spaceSize);
 					System.out.println("alien " + i + " dur: " + alienList.get(i).durability);
+					space.printSpace(map, spaceSize);
 				}
 			}
 			for (int i=0; i<asteroidList.size(); i++) {
@@ -72,6 +76,7 @@ public class Simulation {
 					System.out.println("asteroid " + i + " x: " + asteroidList.get(i).x + " y: " + asteroidList.get(i).y);
 					asteroidList.get(i).move(asteroidList.get(i), i, planetList, travelerList, alienList, blackHoleList, asteroidList, map, spaceSize);
 					System.out.println("asteroid " + i + " dir: " + asteroidList.get(i).direction);
+					space.printSpace(map, spaceSize);
 				}
 			}
 			for (int i=0; i<travelerList.size(); i++) {
@@ -87,8 +92,8 @@ public class Simulation {
 			
 			iteration++;
 			
-			Space space = new Space();
-			space.printSpace(map, spaceSize);
+			
+			//space.printSpace(map, spaceSize);
 			System.out.println("ships in space: " + shipsInSpace + "\n");
 		}
 	}
