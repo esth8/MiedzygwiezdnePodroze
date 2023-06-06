@@ -15,15 +15,16 @@ public class Spaceship implements ISpaceship{
 	@Override
 	public void move(Spaceship spaceship, int i, List<Planet> planetList, List<TravelersSpaceship> travelerList, List<AliensSpaceship> alienList, List<Asteroid> asteroidList, List<BlackHole> blackHoleList, Square[][] map, int spaceSize) {
 		int direction=RandomNumber.generateRandom(4); 	// 0 - ruch w gore planszy, 1 - w lewo, 2 - w prawo, 3 - w dol
-		
+		System.out.println("direction: " + direction);
 		switch (direction) {
 		case (0): {
 			if (spaceship.y!=0) {
-				if (map[spaceship.x][spaceship.y-1].type=='\0') {
+				if (map[spaceship.x][spaceship.y-1].type=='\0') { 	// 
 					map[spaceship.x][spaceship.y].type='\0';
 					map[spaceship.x][spaceship.y].index=-1;
 					map[spaceship.x][spaceship.y-1].type=spaceship.type;
 					map[spaceship.x][spaceship.y-1].index=i;
+					spaceship.y-=1;
 				} else {
 					spaceship.interaction(spaceship, i, map[spaceship.x][spaceship.y-1], planetList, travelerList, alienList, asteroidList, blackHoleList, map);
 				}
@@ -31,7 +32,9 @@ public class Spaceship implements ISpaceship{
 				map[spaceship.x][spaceship.y].type='\0';
 				map[spaceship.x][spaceship.y].index=-1;
 				spaceship.inSpace=false;
+				System.out.println("out of space");
 			}
+			break;
 		}
 		case (1): {
 			if (spaceship.x!=0) {
@@ -40,6 +43,7 @@ public class Spaceship implements ISpaceship{
 					map[spaceship.x][spaceship.y].index=-1;
 					map[spaceship.x-1][spaceship.y].type=spaceship.type;
 					map[spaceship.x-1][spaceship.y].index=i;
+					spaceship.x-=1;
 				} else {
 					spaceship.interaction(spaceship, i, map[spaceship.x-1][spaceship.y], planetList, travelerList, alienList, asteroidList, blackHoleList, map);
 				}
@@ -47,7 +51,9 @@ public class Spaceship implements ISpaceship{
 				map[spaceship.x][spaceship.y].type='\0';
 				map[spaceship.x][spaceship.y].index=-1;
 				spaceship.inSpace=false;
+				System.out.println("out of space");
 			}
+			break;
 		}
 		case (2): {
 			if (spaceship.x!=spaceSize-1) {
@@ -56,6 +62,7 @@ public class Spaceship implements ISpaceship{
 					map[spaceship.x][spaceship.y].index=-1;
 					map[spaceship.x+1][spaceship.y].type=spaceship.type;
 					map[spaceship.x+1][spaceship.y].index=i;
+					spaceship.x+=1;
 				} else {
 					spaceship.interaction(spaceship, i, map[spaceship.x+1][spaceship.y], planetList, travelerList, alienList, asteroidList, blackHoleList, map);
 				}
@@ -63,7 +70,9 @@ public class Spaceship implements ISpaceship{
 				map[spaceship.x][spaceship.y].type='\0';
 				map[spaceship.x][spaceship.y].index=-1;
 				spaceship.inSpace=false;
+				System.out.println("out of space");
 			}
+			break;
 		}	
 		case (3): {
 			if (spaceship.y!=spaceSize-1) {
@@ -72,6 +81,7 @@ public class Spaceship implements ISpaceship{
 					map[spaceship.x][spaceship.y].index=-1;
 					map[spaceship.x][spaceship.y+1].type=spaceship.type;
 					map[spaceship.x][spaceship.y+1].index=i;
+					spaceship.y+=1;
 				} else {
 					spaceship.interaction(spaceship, i, map[spaceship.x][spaceship.y+1], planetList, travelerList, alienList, asteroidList, blackHoleList, map);
 				}
@@ -79,7 +89,9 @@ public class Spaceship implements ISpaceship{
 				map[spaceship.x][spaceship.y].type='\0';
 				map[spaceship.x][spaceship.y].index=-1;
 				spaceship.inSpace=false;
+				System.out.println("out of space");
 			}
+			break;
 		}
 		}
 	}
@@ -93,12 +105,16 @@ public class Spaceship implements ISpaceship{
 		case ('T'):
 			if (spaceship.type=='L') {
 				spaceship.fight(travelerList.get(square.index), alienList.get(i), 'L', map);
-			}			
+			} else {
+				
+			}
 			break;
 		case ('L'):
 			if (spaceship.type=='T') {
 				spaceship.fight(travelerList.get(i), alienList.get(square.index), 'T', map);
-			}			
+			} else {
+				
+			}
 			break;
 		case ('H'):
 			spaceship.beDestroyed(spaceship, blackHoleList.get(square.index), map);
@@ -123,6 +139,7 @@ public class Spaceship implements ISpaceship{
 		} else {
 			planet.landedAlienShips++;
 		}
+		System.out.println("landed");
 	}
 	
 	@Override
@@ -152,6 +169,7 @@ public class Spaceship implements ISpaceship{
 				 travelerWon(traveler,alien,map);
 			 }
 		 }
+		 System.out.println("fight");
 	}
 	
 	@Override
@@ -177,11 +195,13 @@ public class Spaceship implements ISpaceship{
 		spaceship.inSpace=false;
 		map[spaceship.x][spaceship.y].type='\0';
 		map[spaceship.x][spaceship.y].index=-1;
+		spaceship.durability=0;
 		if (spaceship.type=='T') {
 			blackHole.destroyedTravShips++;
 		} else {
 			blackHole.destroyedAlienShips++;
 		}
+		System.out.println("destroyed by black hole");
 	}
 	
 	

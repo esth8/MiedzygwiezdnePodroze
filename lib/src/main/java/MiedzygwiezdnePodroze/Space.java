@@ -15,11 +15,11 @@ public class Space {
 	public void printSpace (Square[][] map, int n) {
 		for (int i=0; i<n; i++) {
 			for (int j=0; j<n; j++) {
-				if (map[i][j].type=='\0') {
+				if (map[j][i].type=='\0') {
 					System.out.print("_");
 				}
 				else { 
-					System.out.print(map[i][j].type);
+					System.out.print(map[j][i].type);
 				}
 				System.out.print(" ");
 			}
