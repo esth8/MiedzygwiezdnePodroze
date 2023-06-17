@@ -10,6 +10,7 @@ public class Spaceship implements ISpaceship{
 	public boolean inSpace;
 	public int durability;
 	public int enduredBattles;
+	public int destroyedAstrd; // statek zderzył się z asteroidą, nie musiał tego przetrwać
 	public char type;
 	
 	@Override
@@ -29,7 +30,7 @@ public class Spaceship implements ISpaceship{
 		}
 		
 		int direction=RandomNumber.generateRandom(4); 	// 0 - ruch w gore planszy, 1 - w lewo, 2 - w prawo, 3 - w dol
-		System.out.println("direction: " + direction);
+		//System.out.println("direction: " + direction);
 		switch (direction) {
 		case (0): {
 			if (spaceship.y!=0) {
@@ -46,7 +47,7 @@ public class Spaceship implements ISpaceship{
 				map[spaceship.x][spaceship.y].type='\0';
 				map[spaceship.x][spaceship.y].index=-1;
 				spaceship.inSpace=false;
-				System.out.println("out of space");
+				//System.out.println("out of space");
 			}
 			break;
 		}
@@ -65,7 +66,7 @@ public class Spaceship implements ISpaceship{
 				map[spaceship.x][spaceship.y].type='\0';
 				map[spaceship.x][spaceship.y].index=-1;
 				spaceship.inSpace=false;
-				System.out.println("out of space");
+				//System.out.println("out of space");
 			}
 			break;
 		}
@@ -84,7 +85,7 @@ public class Spaceship implements ISpaceship{
 				map[spaceship.x][spaceship.y].type='\0';
 				map[spaceship.x][spaceship.y].index=-1;
 				spaceship.inSpace=false;
-				System.out.println("out of space");
+				//System.out.println("out of space");
 			}
 			break;
 		}	
@@ -103,7 +104,7 @@ public class Spaceship implements ISpaceship{
 				map[spaceship.x][spaceship.y].type='\0';
 				map[spaceship.x][spaceship.y].index=-1;
 				spaceship.inSpace=false;
-				System.out.println("out of space");
+				//System.out.println("out of space");
 			}
 			break;
 		}
@@ -153,7 +154,7 @@ public class Spaceship implements ISpaceship{
 		} else {
 			planet.landedAlienShips++;
 		}
-		System.out.println("landed");
+		//System.out.println("landed");
 	}
 	
 	@Override
@@ -183,7 +184,7 @@ public class Spaceship implements ISpaceship{
 				 travelerWon(traveler,alien,map);
 			 }
 		 }
-		 System.out.println("fight");
+		 //System.out.println("fight");
 	}
 	
 	@Override
@@ -215,7 +216,7 @@ public class Spaceship implements ISpaceship{
 		} else {
 			blackHole.destroyedAlienShips++;
 		}
-		System.out.println("destroyed by black hole");
+		//System.out.println("destroyed by black hole");
 	}
 	
 	

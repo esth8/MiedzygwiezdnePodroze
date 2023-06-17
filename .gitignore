@@ -3,3 +3,18 @@
 
 # Ignore Gradle build output directory
 build
+
+*.class
+
+.project
+.metadata
+bin/**
+tmp/**
+tmp/**/*
+*.tmp
+*.swp
+*~.nib
+local.properties
+.classpath
+.settings/
+.loadpath

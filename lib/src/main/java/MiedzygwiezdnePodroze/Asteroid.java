@@ -10,10 +10,16 @@ public class Asteroid implements IAsteroid {
 	public int y;
 	public String direction;
 	public boolean inSpace;
+	public int destroyedTravShips;
+	public int destroyedAlienShips;
+	public int destroyedAstrd;
 	
 	public Asteroid (){
 		direction = "\0";
 		inSpace = true;
+		destroyedTravShips=0;
+		destroyedAlienShips=0;
+		destroyedAstrd=0;
 	}
 	
 	public List<Asteroid> createAsteroidList (int n){ 	// n = liczba asteroid
@@ -243,7 +249,7 @@ public class Asteroid implements IAsteroid {
 		asteroid.inSpace=false;
 		map[asteroid.x][asteroid.y].type='\0';
 		map[asteroid.x][asteroid.y].index=-1;
-		System.out.println("collision with planet");
+		//System.out.println("collision with planet");
 	}
 
 	@Override
@@ -251,27 +257,31 @@ public class Asteroid implements IAsteroid {
 		traveler.inSpace=false;
 		traveler.durability=0;
 		asteroid.inSpace=false;
+		asteroid.destroyedTravShips++;
+		traveler.destroyedAstrd++;
 		map[traveler.x][traveler.y].type='\0';
 		map[traveler.x][traveler.y].index=-1;
 		map[asteroid.x][asteroid.y].type='\0';
 		map[asteroid.x][asteroid.y].index=-1;
-		System.out.println("collision with traveler");
+		//System.out.println("collision with traveler");
 	}
 
 	@Override
 	public void collisionAlien(Asteroid asteroid, AliensSpaceship alien, Square[][] map) {
 		alien.durability-=2;
+		alien.destroyedAstrd++;
 		if (alien.durability<=0) {
 			alien.inSpace=false;
 			map[alien.x][alien.y].type='\0';
 			map[alien.x][alien.y].index=-1;
+			asteroid.destroyedAlienShips++;
 		} else {
 			alien.collidedAstrd++;
 		}
 		asteroid.inSpace=false;
 		map[asteroid.x][asteroid.y].type='\0';
 		map[asteroid.x][asteroid.y].index=-1;
-		System.out.println("collision with alien");
+		//System.out.println("collision with alien");
 	}
 	
 	public void collisionAsteroid(Asteroid asteroid1, Asteroid asteroid2, Square[][] map) {
@@ -281,7 +291,9 @@ public class Asteroid implements IAsteroid {
 		asteroid2.inSpace=false;
 		map[asteroid2.x][asteroid2.y].type='\0';
 		map[asteroid2.x][asteroid2.y].index=-1;
-		System.out.println("collision with asteroid");
+		asteroid1.destroyedAstrd++;
+		asteroid2.destroyedAstrd++;
+		//System.out.println("collision with asteroid");
 	}
 
 	@Override
@@ -290,6 +302,6 @@ public class Asteroid implements IAsteroid {
 		map[asteroid.x][asteroid.y].type='\0';
 		map[asteroid.x][asteroid.y].index=-1;
 		blackHole.destroyedAstrd++;
-		System.out.println("collision with black hole");
+		//System.out.println("collision with black hole");
 	}
 }

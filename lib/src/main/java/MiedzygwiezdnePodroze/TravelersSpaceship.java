@@ -10,6 +10,7 @@ public class TravelersSpaceship extends Spaceship{
 		inSpace = true;
 		durability=RandomNumber.generateRandom(10)+1;
 		enduredBattles=0;
+		destroyedAstrd=0;
 		type='T';
 	}
 	

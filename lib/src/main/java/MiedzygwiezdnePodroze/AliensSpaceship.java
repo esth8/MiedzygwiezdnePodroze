@@ -6,13 +6,14 @@ import java.util.List;
 import MiedzygwiezdnePodroze.Space.Square;
 
 public class AliensSpaceship extends Spaceship{
-	public int collidedAstrd;
+	public int collidedAstrd; 	// statek przetrwał zderzenie
 	
 	public AliensSpaceship (){
 		inSpace = true;
 		durability=RandomNumber.generateRandom(10)+1;
 		enduredBattles=0;
 		collidedAstrd=0;
+		destroyedAstrd=0;
 		type='L';
 	}
 	
