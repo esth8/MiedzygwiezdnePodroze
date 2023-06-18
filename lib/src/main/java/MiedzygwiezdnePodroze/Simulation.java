@@ -11,15 +11,15 @@ import MiedzygwiezdnePodroze.Space.Square;
 
 public class Simulation {
 	
-	private static int landedTravShips=0;
-	private static int landedAlienShips=0;
-	private static int destroyedTravShips=0;
-	private static int destroyedAlienShips=0;
+	private static int landedTravShips;
+	private static int landedAlienShips;
+	private static int destroyedTravShips;
+	private static int destroyedAlienShips;
 	
-	private static int allLandedShips=0;
-	private static int allDestroyedShips=0;
-	private static int allFights=0;
-	private static int allDestroyedAstrd=0;
+	private static int allLandedShips;
+	private static int allDestroyedShips;
+	private static int allFights;
+	private static int allDestroyedAstrd;
 
 	public static void main(String[] args) throws IOException {		
 		Scanner scan = new Scanner(System.in);
@@ -50,11 +50,9 @@ public class Simulation {
 		al=3;
 		*/
 		
-		// utworzenie planszy
+		// wymiary planszy
 		System.out.print("rozmiar mapy: ");
 		int spaceSize=scan.nextInt();
-		Space space = new Space();
-		Square[][] map = space.createSpace(spaceSize);
 		
 		// maksymalna liczba iteracji
 		System.out.print("liczba iteracji: ");
@@ -64,38 +62,55 @@ public class Simulation {
 		System.out.print("liczba wykonan symulacji: ");
 		int sim=scan.nextInt();
 		
-		// utworzenie list obiektow kazdej klasy i umieszczenie ich na planszy
+		Space space = new Space();
 		Planet planet = new Planet();
-		List<Planet> planetList = planet.createPlanetList(pl);
-		planet.planetsInSpace(spaceSize, pl, planetList, map);
-		
-		BlackHole blackHole = new BlackHole();
-		List<BlackHole> blackHoleList = blackHole.createBHList(bh);
-		blackHole.holesInSpace(spaceSize, bh, blackHoleList, map);
-		
+		BlackHole blackHole = new BlackHole();		
 		Asteroid asteroid = new Asteroid();
-		List<Asteroid> asteroidList = asteroid.createAsteroidList(ast);
-		asteroid.asteroidsInSpace(spaceSize, ast, asteroidList, map);
-		
 		TravelersSpaceship traveler = new TravelersSpaceship();
-		List<TravelersSpaceship> travelerList = traveler.createTravelersList(tr);
-		traveler.travelersInSpace(spaceSize, tr, travelerList, map);
-		
 		AliensSpaceship alien = new AliensSpaceship();
-		List<AliensSpaceship> alienList = alien.createAliensList(al);
-		alien.aliensInSpace(spaceSize, al, alienList, map);
 		
-		space.printSpace(map, spaceSize);
-		System.out.print("\n");
-		
+		// utworzenie pliku, do ktorego beda zapisywane dane zebrane podczas symulacji
 		File results = new File ("map"+spaceSize+"pl"+pl+"bh"+bh+"ast"+ast+"tr"+tr+"al"+al+".txt");
+		PrintWriter write = new PrintWriter(results);
 		
 		for (int i=1; i<=sim; i++) {
+			landedTravShips=0;
+			landedAlienShips=0;
+			destroyedTravShips=0;
+			destroyedAlienShips=0;
+			allLandedShips=0;
+			allDestroyedShips=0;
+			allFights=0;
+			allDestroyedAstrd=0;
+			
+			//utworzenie mapy
+			Square[][] map = space.createSpace(spaceSize);
+			
+			// utworzenie list obiektow kazdej klasy i umieszczenie ich na planszy
+			List<Planet> planetList = planet.createPlanetList(pl);
+			planet.planetsInSpace(spaceSize, pl, planetList, map);
+			
+			List<BlackHole> blackHoleList = blackHole.createBHList(bh);
+			blackHole.holesInSpace(spaceSize, bh, blackHoleList, map);
+			
+			List<Asteroid> asteroidList = asteroid.createAsteroidList(ast);
+			asteroid.asteroidsInSpace(spaceSize, ast, asteroidList, map);
+			
+			List<TravelersSpaceship> travelerList = traveler.createTravelersList(tr);
+			traveler.travelersInSpace(spaceSize, tr, travelerList, map);
+			
+			List<AliensSpaceship> alienList = alien.createAliensList(al);
+			alien.aliensInSpace(spaceSize, al, alienList, map);
+			
+			space.printSpace(map, spaceSize);
+			System.out.print("\n");
+			
 			runSimulation(map, planetList, blackHoleList, asteroidList, travelerList, alienList, iter, spaceSize, results);
-			System.out.println("saved in file: " + printInFile(sim, spaceSize, results));
+			System.out.println("saved in file: " + printInFile(i, results, write) + "\n");
 		}
 		
 		scan.close();
+		write.close();
 	}
 	
 	public static void runSimulation(Square[][] map, List<Planet> planetList, List<BlackHole> blackHoleList, List<Asteroid> asteroidList, List<TravelersSpaceship> travelerList, List<AliensSpaceship> alienList, int iter, int spaceSize, File results) throws IOException {
@@ -183,13 +198,11 @@ public class Simulation {
 		System.out.println(allLandedShips + "," + allDestroyedShips + "," + allFights + "," + allDestroyedAstrd);
 	}
 	
-	private static int printInFile (int simNumber, int spaceSize, File results) throws IOException {
+	private static int printInFile (int simNumber, File results, PrintWriter write) throws IOException {
 		if (!results.exists()) {
 			return -1;
 		} else {
-			PrintWriter write = new PrintWriter(results);
-			write.print(simNumber+","+landedTravShips+","+landedAlienShips+","+allLandedShips+","+destroyedTravShips+","+destroyedAlienShips+","+allDestroyedShips+","+allFights+","+allDestroyedAstrd+"\n");				
-			write.close();
+			write.println(simNumber+","+landedTravShips+","+landedAlienShips+","+allLandedShips+","+destroyedTravShips+","+destroyedAlienShips+","+allDestroyedShips+","+allFights+","+allDestroyedAstrd);				
 			return 0;
 		}
 	}
