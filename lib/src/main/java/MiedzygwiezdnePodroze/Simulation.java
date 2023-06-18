@@ -1,5 +1,10 @@
 package MiedzygwiezdnePodroze;
 
+import java.util.Scanner;
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
+
 import java.util.List;
 
 import MiedzygwiezdnePodroze.Space.Square;
@@ -16,20 +21,44 @@ public class Simulation {
 	private static int allFights=0;
 	private static int allDestroyedAstrd=0;
 
-	public static void main(String[] args) {		
+	public static void main(String[] args) throws IOException {		
+		Scanner scan = new Scanner(System.in);
+		
 		// liczba planet, asteroid, statków obcych, statków podróżników i czarnych dziur
 		int pl, ast, al, tr, bh;
 		
+		System.out.print("liczba planet: ");
+		pl=scan.nextInt();
+		
+		System.out.print("liczba czarnych dziur: ");
+		bh=scan.nextInt();
+		
+		System.out.print("liczba asteroid: ");
+		ast=scan.nextInt();
+		
+		System.out.print("liczba statkow podroznikow: ");
+		tr=scan.nextInt();
+		
+		System.out.print("liczba statkow obcych: ");
+		al=scan.nextInt();
+		
+		/*
 		pl=3;
 		bh=3;
 		ast=3;
 		tr=3;
 		al=3;
+		*/
 		
 		// utworzenie planszy
-		int spaceSize=10;
+		System.out.print("rozmiar mapy: ");
+		int spaceSize=scan.nextInt();
 		Space space = new Space();
 		Square[][] map = space.createSpace(spaceSize);
+		
+		// maksymalna liczba iteracji
+		System.out.print("liczba iteracji: ");
+		int iter=scan.nextInt();
 		
 		// utworzenie list obiektow kazdej klasy i umieszczenie ich na planszy
 		Planet planet = new Planet();
@@ -55,11 +84,13 @@ public class Simulation {
 		space.printSpace(map, spaceSize);
 		System.out.print("\n");
 		
-		runSimulation(map, planetList, blackHoleList, asteroidList, travelerList, alienList, 10, spaceSize);
+		runSimulation(map, planetList, blackHoleList, asteroidList, travelerList, alienList, iter, spaceSize);
+		
+		scan.close();
 	}
 	
-	public static void runSimulation(Square[][] map, List<Planet> planetList, List<BlackHole> blackHoleList, List<Asteroid> asteroidList, List<TravelersSpaceship> travelerList, List<AliensSpaceship> alienList, int iter, int spaceSize) {
-		Space space = new Space();
+	public static void runSimulation(Square[][] map, List<Planet> planetList, List<BlackHole> blackHoleList, List<Asteroid> asteroidList, List<TravelersSpaceship> travelerList, List<AliensSpaceship> alienList, int iter, int spaceSize) throws IOException {
+		//Space space = new Space();
 		
 		int iteration=0;
 		int shipsInSpace=travelerList.size()+alienList.size();
@@ -103,7 +134,7 @@ public class Simulation {
 			
 			iteration++;
 			
-			space.printSpace(map, spaceSize);
+			//space.printSpace(map, spaceSize);
 			System.out.println("ships in space: " + shipsInSpace + "\n");
 		}
 		
@@ -141,5 +172,18 @@ public class Simulation {
 		allDestroyedShips=destroyedTravShips+destroyedAlienShips;
 		
 		System.out.println(allLandedShips + "," + allDestroyedShips + "," + allFights + "," + allDestroyedAstrd);
+		//System.out.println("saved in file: " + printInFile(iter,spaceSize,planetList.size(),blackHoleList.size(),asteroidList.size(),travelerList.size(),alienList.size()));
+	}
+	
+	private static int printInFile (int iter, int spaceSize, int pl, int bh, int ast, int tr, int al) throws IOException {
+		File results = new File ("map"+spaceSize+"pl"+pl+"bh"+bh+"ast"+ast+"tr"+tr+"al"+al+".txt");
+		if (!results.createNewFile() && !results.exists()) {
+			return -1;
+		} else {
+			PrintWriter write = new PrintWriter(results);
+			write.print(iter+','+landedTravShips+','+landedAlienShips+','+allLandedShips+','+destroyedTravShips+','+destroyedAlienShips+','+allDestroyedShips+','+allFights+','+allDestroyedAstrd+'\n');				
+			write.close();
+			return 0;
+		}
 	}
 }
