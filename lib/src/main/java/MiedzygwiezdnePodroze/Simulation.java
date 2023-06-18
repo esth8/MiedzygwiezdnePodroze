@@ -60,6 +60,10 @@ public class Simulation {
 		System.out.print("liczba iteracji: ");
 		int iter=scan.nextInt();
 		
+		// liczba wykonan symulacji dla tych samych parametrow
+		System.out.print("liczba wykonan symulacji: ");
+		int sim=scan.nextInt();
+		
 		// utworzenie list obiektow kazdej klasy i umieszczenie ich na planszy
 		Planet planet = new Planet();
 		List<Planet> planetList = planet.createPlanetList(pl);
@@ -84,12 +88,17 @@ public class Simulation {
 		space.printSpace(map, spaceSize);
 		System.out.print("\n");
 		
-		runSimulation(map, planetList, blackHoleList, asteroidList, travelerList, alienList, iter, spaceSize);
+		File results = new File ("map"+spaceSize+"pl"+pl+"bh"+bh+"ast"+ast+"tr"+tr+"al"+al+".txt");
+		
+		for (int i=1; i<=sim; i++) {
+			runSimulation(map, planetList, blackHoleList, asteroidList, travelerList, alienList, iter, spaceSize, results);
+			System.out.println("saved in file: " + printInFile(sim, spaceSize, results));
+		}
 		
 		scan.close();
 	}
 	
-	public static void runSimulation(Square[][] map, List<Planet> planetList, List<BlackHole> blackHoleList, List<Asteroid> asteroidList, List<TravelersSpaceship> travelerList, List<AliensSpaceship> alienList, int iter, int spaceSize) throws IOException {
+	public static void runSimulation(Square[][] map, List<Planet> planetList, List<BlackHole> blackHoleList, List<Asteroid> asteroidList, List<TravelersSpaceship> travelerList, List<AliensSpaceship> alienList, int iter, int spaceSize, File results) throws IOException {
 		//Space space = new Space();
 		
 		int iteration=0;
@@ -172,16 +181,14 @@ public class Simulation {
 		allDestroyedShips=destroyedTravShips+destroyedAlienShips;
 		
 		System.out.println(allLandedShips + "," + allDestroyedShips + "," + allFights + "," + allDestroyedAstrd);
-		//System.out.println("saved in file: " + printInFile(iter,spaceSize,planetList.size(),blackHoleList.size(),asteroidList.size(),travelerList.size(),alienList.size()));
 	}
 	
-	private static int printInFile (int iter, int spaceSize, int pl, int bh, int ast, int tr, int al) throws IOException {
-		File results = new File ("map"+spaceSize+"pl"+pl+"bh"+bh+"ast"+ast+"tr"+tr+"al"+al+".txt");
-		if (!results.createNewFile() && !results.exists()) {
+	private static int printInFile (int simNumber, int spaceSize, File results) throws IOException {
+		if (!results.exists()) {
 			return -1;
 		} else {
 			PrintWriter write = new PrintWriter(results);
-			write.print(iter+','+landedTravShips+','+landedAlienShips+','+allLandedShips+','+destroyedTravShips+','+destroyedAlienShips+','+allDestroyedShips+','+allFights+','+allDestroyedAstrd+'\n');				
+			write.print(simNumber+","+landedTravShips+","+landedAlienShips+","+allLandedShips+","+destroyedTravShips+","+destroyedAlienShips+","+allDestroyedShips+","+allFights+","+allDestroyedAstrd+"\n");				
 			write.close();
 			return 0;
 		}

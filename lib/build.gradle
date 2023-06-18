@@ -37,6 +37,7 @@ run {
 	doFirst{
 		print "Rozpoczecie symulacji.\n"
 	}
+	standardInput = System.in
 }
 
 
